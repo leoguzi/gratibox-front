@@ -6,6 +6,7 @@ const colors = {
   color2: '#e0d1ed;',
   color3: '#e5cdb3;',
   color4: '#ffffff;',
+  color5: '#4D65A8',
 };
 
 const GlobalStyle = createGlobalStyle`
