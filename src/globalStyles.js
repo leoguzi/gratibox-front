@@ -7,6 +7,9 @@ const colors = {
   color3: '#e5cdb3;',
   color4: '#ffffff;',
   color5: '#4D65A8',
+  color6: '#8C97EA',
+  color7: '#F8AFA6',
+  color8: '#BA0F30',
 };
 
 const GlobalStyle = createGlobalStyle`

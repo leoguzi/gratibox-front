@@ -24,7 +24,7 @@ const TitleContainer = styled.div`
 
 const SmallButton = styled.button`
   height: 40px;
-  padding: 10px 30px;
+  padding: 0 30px;
   margin-bottom: 20px;
   background-color: ${colors.color0};
   border: none;
@@ -34,10 +34,56 @@ const SmallButton = styled.button`
   color: ${colors.color4};
 `;
 
+const BigButton = styled.button`
+  height: 56px;
+  width: 100%;
+  padding: 0 30px;
+  margin-bottom: 20px;
+  background-color: ${colors.color6};
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 36px;
+  color: ${colors.color4};
+`;
+
 const StyledLink = styled(Link)`
   color: ${colors.color4};
   font-weight: bold;
   font-size: 18px;
 `;
 
-export { TitleContainer, SmallButton, StyledLink };
+const StyledForm = styled.form`
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+  height: 56px;
+  border: ${(props) => (props.invalid ? `2px solid ${colors.color8}` : 'none')};
+  border-radius: 5px;
+  margin-bottom: 7px;
+  padding-left: 10px;
+  font-size: 24px;
+  &:focus {
+    outline: 2px solid ${colors.color7};
+  }
+`;
+
+const FormErrorMessage = styled.span`
+  color: ${colors.color4};
+  margin-bottom: 5px;
+`;
+
+export {
+  TitleContainer,
+  SmallButton,
+  BigButton,
+  StyledLink,
+  StyledForm,
+  StyledInput,
+  FormErrorMessage,
+};
