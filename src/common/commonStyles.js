@@ -78,6 +78,30 @@ const FormErrorMessage = styled.span`
   margin-bottom: 5px;
 `;
 
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const SignatureInfoCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: ${colors.color4};
+  padding: 0 20px 0 20px;
+  margin: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  img {
+    display: block;
+    width: 100%;
+    border-radius: 10px;
+  }
+  span {
+    margin-bottom: 5px;
+  }
+`;
+
 export {
   TitleContainer,
   SmallButton,
@@ -86,4 +110,6 @@ export {
   StyledForm,
   StyledInput,
   FormErrorMessage,
+  ContentContainer,
+  SignatureInfoCard,
 };

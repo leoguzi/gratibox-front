@@ -1,11 +1,11 @@
 const { createGlobalStyle } = require('styled-components');
 
 const colors = {
-  color0: '#6d7ce4',
-  color1: '#e63c80;',
-  color2: '#e0d1ed;',
-  color3: '#e5cdb3;',
-  color4: '#ffffff;',
+  color0: '#6D7CE4',
+  color1: '#E63C80;',
+  color2: '#E0D1ED;',
+  color3: '#E5CDB3;',
+  color4: '#FFFFFF;',
   color5: '#4D65A8',
   color6: '#8C97EA',
   color7: '#F8AFA6',

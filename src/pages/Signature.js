@@ -1,13 +1,20 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { colors } from '../globalStyles';
-import { SmallButton, TitleContainer } from '../common/commonStyles';
+import {
+  SmallButton,
+  TitleContainer,
+  ContentContainer,
+  SignatureInfoCard,
+} from '../common/commonStyles';
 import weeklyImage from '../assets/image04.jpg';
 import monthlyImage from '../assets/image02.jpg';
 import signatureInfoImage from '../assets/image03.jpg';
 
 export default function Signature() {
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
   useEffect(() => {
     setUser({ signature: false });
   }, []);
@@ -23,7 +30,7 @@ export default function Signature() {
         </h2>
       </TitleContainer>
       {user.signature ? (
-        <Container>
+        <ContentContainer>
           <SignatureInfoCard>
             <img src={signatureInfoImage} alt='Mulher meditando.' />
             <InfoLabel>
@@ -35,23 +42,23 @@ export default function Signature() {
             <InfoLabel>
               Proximas entregas: <Info>{}</Info>
             </InfoLabel>
-            <div>
-              <Product>Chás</Product>
-              <Product>Produtos organicos</Product>
-              <Product>Incensos</Product>
-            </div>
+            <ProductsContainer>
+              <span>Chás</span>
+              <span>Produtos organicos</span>
+              <span>Incensos</span>
+            </ProductsContainer>
           </SignatureInfoCard>
           <SmallButton>Avaliar Entregas</SmallButton>
-        </Container>
+        </ContentContainer>
       ) : (
-        <Container>
+        <ContentContainer>
           <SignatureOptionCard>
             <img src={weeklyImage} alt='Mulher meditando com plantas.' />
             <span>
               Você recebe um box por semana. Ideal para quem quer exercer a
               gratidão todos os dias.
             </span>
-            <SmallButton>Assinar</SmallButton>
+            <SmallButton onClick={() => navigate('/form')}>Assinar</SmallButton>
           </SignatureOptionCard>
           <SignatureOptionCard>
             <img src={monthlyImage} alt='Mulher meditando no quarto.' />
@@ -60,18 +67,14 @@ export default function Signature() {
               <br />
               Ideal para quem está começando agora.
             </span>
-            <SmallButton>Assinar</SmallButton>
+            <SmallButton onClick={() => navigate('/form')}>Assinar</SmallButton>
           </SignatureOptionCard>
-        </Container>
+        </ContentContainer>
       )}
     </>
   );
 }
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+
 const SignatureOptionCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -95,37 +98,20 @@ const SignatureOptionCard = styled.div`
   }
 `;
 
-const SignatureInfoCard = styled.div`
+const ProductsContainer = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  background-color: ${colors.color4};
-  padding: 0 20px 0 20px;
-  margin: 10px;
-  border-radius: 10px;
-  margin-bottom: 30px;
-  img {
-    display: block;
-    width: 100%;
-    border-radius: 10px;
-  }
-  div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin: 20px 0 5px 0;
-  }
-  span {
-    margin-bottom: 5px;
-  }
-`;
+  justify-content: space-between;
+  margin: 20px 0 5px 0;
 
-const Product = styled.span`
-  color: ${colors.color8};
+  span {
+    color: ${colors.color8};
+  }
 `;
 
 const InfoLabel = styled.span`
   color: ${colors.color0};
 `;
 const Info = styled.span`
-  color: ${colors.color8};
+  color: ${colors.color3};
 `;
