@@ -38,12 +38,12 @@ export default function Login() {
           }
         />
         {invalidFormFields.email && (
-          <FormErrorMessage>Email não cadastrado!</FormErrorMessage>
+          <FormErrorMessage>E-mail não cadastrado!</FormErrorMessage>
         )}
         <StyledInput
           required
           type='password'
-          placeholder='Password'
+          placeholder='Senha'
           invalid={invalidFormFields.password}
           onChange={(e) =>
             setFormFields({ ...formFields, password: e.target.value })
@@ -57,7 +57,7 @@ export default function Login() {
           <BigButton type='submit'>
             <span>Login</span>
           </BigButton>
-          <StyledLink to='/registration'>Ainda não sou grato(a)</StyledLink>
+          <StyledLink to='/signup'>Ainda não sou grato(a)</StyledLink>
         </ButtoContainer>
       </StyledForm>
     </>

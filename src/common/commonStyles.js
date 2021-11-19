@@ -9,7 +9,7 @@ const TitleContainer = styled.div`
   justify-content: space-around;
   margin-top: 20px;
   padding: 10px 40px;
-  height: 25vh;
+  height: 20vh;
   h1,
   h2 {
     text-align: center;
@@ -26,7 +26,7 @@ const SmallButton = styled.button`
   height: 40px;
   padding: 0 30px;
   margin-bottom: 20px;
-  background-color: ${colors.color0};
+  background-color: ${colors.color6};
   border: none;
   border-radius: 5px;
   font-weight: bold;
