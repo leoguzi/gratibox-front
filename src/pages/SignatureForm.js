@@ -1,15 +1,19 @@
+import { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../contexts/UserContext';
 import {
   TitleContainer,
   ContentContainer,
-  SignatureInfoCard,
   SmallButton,
+  SignatureInfoCard,
 } from '../common/commonStyles';
 import { colors } from '../globalStyles';
 import formImage from '../assets/image03.jpg';
 
 export default function SignatureForm() {
+  const navigate = useNavigate();
+  const [warning, setWarning] = useState(false);
   const [formFields, setFormFields] = useState({
     signatureType: 'weekly',
     deliveryDay: 'monday',
@@ -17,6 +21,19 @@ export default function SignatureForm() {
     incense: false,
     organic_products: false,
   });
+
+  const { user, setSignatureInfo } = useContext(UserContext);
+
+  useEffect(() => {
+    setSignatureInfo({ ...formFields, user: user.token });
+  }, [formFields]);
+
+  function handleSubmit() {
+    if (formFields.tea || formFields.organic_products || formFields.incense) {
+      navigate('/address');
+    }
+    setWarning(true);
+  }
   return (
     <>
       <TitleContainer>
@@ -72,12 +89,13 @@ export default function SignatureForm() {
                   <input
                     checked={formFields.tea}
                     type='checkbox'
-                    onChange={() =>
+                    onChange={() => {
                       setFormFields({
                         ...formFields,
                         tea: !formFields.tea,
-                      })
-                    }
+                      });
+                      setWarning(false);
+                    }}
                   />
                   Chás
                 </label>
@@ -85,12 +103,13 @@ export default function SignatureForm() {
                   <input
                     checked={formFields.incense}
                     type='checkbox'
-                    onChange={() =>
+                    onChange={() => {
                       setFormFields({
                         ...formFields,
                         incense: !formFields.incense,
-                      })
-                    }
+                      });
+                      setWarning(false);
+                    }}
                   />
                   Incensos
                 </label>
@@ -98,20 +117,22 @@ export default function SignatureForm() {
                   <input
                     checked={formFields.organic_products}
                     type='checkbox'
-                    onChange={() =>
+                    onChange={() => {
                       setFormFields({
                         ...formFields,
                         organic_products: !formFields.organic_products,
-                      })
-                    }
+                      });
+                      setWarning(false);
+                    }}
                   />
                   Produtos Organicos
                 </label>
               </div>
+              {warning && <Warning>Selecione pelo menos um item!</Warning>}
             </CheckBoxContainer>
           </StyledSignatureForm>
         </SignatureInfoCard>
-        <SmallButton>Próximo</SmallButton>
+        <SmallButton onClick={() => handleSubmit()}>Próximo</SmallButton>
       </ContentContainer>
     </>
   );
@@ -168,4 +189,10 @@ const CheckBoxContainer = styled.div`
     transform: scale(1.5);
     margin-right: 10px;
   }
+`;
+
+const Warning = styled.span`
+  color: ${colors.color8};
+  margin-bottom: 5px;
+  align-self: center;
 `;
