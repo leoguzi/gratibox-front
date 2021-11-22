@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { serverLogin } from '../services/api.service';
+import UserContext from '../contexts/UserContext';
 
 import {
   TitleContainer,
@@ -11,14 +14,36 @@ import {
 } from '../common/commonStyles';
 
 export default function Login() {
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
   const [formFields, setFormFields] = useState({ email: '', password: '' });
+  const [disabled, setDisabled] = useState(false);
   const [invalidFormFields, setInvalidFormFields] = useState({
     email: false,
     password: false,
   });
+
+  function login(userData) {
+    setUser(userData);
+    setDisabled(false);
+    localStorage.setItem('userSession', JSON.stringify(userData));
+    navigate('/signature');
+  }
+
+  function handleError(error) {
+    const { status } = error.response;
+    if (status === 404) {
+      setInvalidFormFields({ invalidFormFields, email: true });
+    } else if (status === 401) {
+      setInvalidFormFields({ ...setInvalidFormFields, password: true });
+    }
+  }
+
   function handleLogin(e) {
     e.preventDefault();
-    setInvalidFormFields({ ...invalidFormFields, email: true });
+    serverLogin(formFields)
+      .then((r) => login(r.data))
+      .catch(handleError);
   }
   return (
     <>
@@ -29,6 +54,7 @@ export default function Login() {
       </TitleContainer>
       <StyledForm type='submit' onSubmit={(e) => handleLogin(e)}>
         <StyledInput
+          disabled={disabled}
           required
           type='email'
           placeholder='E-mail'
@@ -41,6 +67,7 @@ export default function Login() {
           <FormErrorMessage>E-mail não cadastrado!</FormErrorMessage>
         )}
         <StyledInput
+          disabled={disabled}
           required
           type='password'
           placeholder='Senha'

@@ -16,7 +16,7 @@ export default function Signature() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   useEffect(() => {
-    setUser({ signature: false });
+    setUser({ signature: true });
   }, []);
 
   return (

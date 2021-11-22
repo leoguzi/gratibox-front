@@ -19,7 +19,7 @@ export default function SignatureForm() {
     deliveryDay: 'monday',
     tea: false,
     incense: false,
-    organic_products: false,
+    organicProducts: false,
   });
 
   const { user, setSignatureInfo } = useContext(UserContext);
@@ -29,7 +29,7 @@ export default function SignatureForm() {
   }, [formFields]);
 
   function handleSubmit() {
-    if (formFields.tea || formFields.organic_products || formFields.incense) {
+    if (formFields.tea || formFields.organicProducts || formFields.incense) {
       navigate('/address');
     }
     setWarning(true);
@@ -115,12 +115,12 @@ export default function SignatureForm() {
                 </label>
                 <label>
                   <input
-                    checked={formFields.organic_products}
+                    checked={formFields.organicProducts}
                     type='checkbox'
                     onChange={() => {
                       setFormFields({
                         ...formFields,
-                        organic_products: !formFields.organic_products,
+                        organicProducts: !formFields.organicProducts,
                       });
                       setWarning(false);
                     }}
