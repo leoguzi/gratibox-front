@@ -14,13 +14,16 @@ function serverLogin(user) {
   return axios.post(`${API}login`, user);
 }
 
+function getSignature(token) {
+  return axios.get(`${API}signature`, authConfig(token));
+}
+
 function registerUser(userData) {
   return axios.post(`${API}register`, userData);
 }
 
 function registerSignature(token, signatureInfo) {
-  console.log(signatureInfo);
   return axios.post(`${API}signature`, signatureInfo, authConfig(token));
 }
 
-export { serverLogin, registerUser, registerSignature };
+export { serverLogin, registerUser, getSignature, registerSignature };

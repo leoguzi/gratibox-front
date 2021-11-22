@@ -1,26 +1,29 @@
 import styled from 'styled-components';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../contexts/UserContext';
 import { colors } from '../globalStyles';
+import weeklyImage from '../assets/image04.jpg';
+import monthlyImage from '../assets/image02.jpg';
+import signatureInfoImage from '../assets/image03.jpg';
+import { getSignature } from '../services/api.service';
 import {
   SmallButton,
   TitleContainer,
   ContentContainer,
   SignatureInfoCard,
 } from '../common/commonStyles';
-import weeklyImage from '../assets/image04.jpg';
-import monthlyImage from '../assets/image02.jpg';
-import signatureInfoImage from '../assets/image03.jpg';
 
 export default function Signature() {
   const navigate = useNavigate();
+  const [signatureInfo, setSignatureInfo] = useState({});
   const { user } = useContext(UserContext);
-  const { signatureInfo } = user;
+
   useEffect(() => {
     if (!user.token) {
       navigate('/');
     }
+    getSignature(user.token).then((r) => setSignatureInfo(r.data));
   });
 
   return (
@@ -51,8 +54,8 @@ export default function Signature() {
             <InfoLabel>
               Proximas entregas:
               <DatesContainer>
-                {signatureInfo.nextDeliveries?.map((delivery) => (
-                  <Info>{delivery}</Info>
+                {signatureInfo.nextDeliveries?.map((delivery, index) => (
+                  <Info key={index}>{delivery}</Info>
                 ))}
               </DatesContainer>
             </InfoLabel>
