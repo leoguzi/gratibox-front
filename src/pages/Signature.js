@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../contexts/UserContext';
 import { colors } from '../globalStyles';
 import {
   SmallButton,
@@ -13,39 +14,49 @@ import monthlyImage from '../assets/image02.jpg';
 import signatureInfoImage from '../assets/image03.jpg';
 
 export default function Signature() {
-  const [user, setUser] = useState({});
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  useEffect(() => {
-    setUser({ signature: true });
-  }, []);
+  const { signatureInfo } = user;
 
   return (
     <>
       <TitleContainer>
-        <h1>Bom te ver por aqui, @user</h1>
+        <h1>Bom te ver por aqui, {user.name.split(' ')[0]}</h1>
         <h2>
-          {user.signature
+          {signatureInfo
             ? '"Agradecer é a arte de atrair coisas boas"'
             : 'Você ainda não assinou nenhum plano, que tal começar agora?'}
         </h2>
       </TitleContainer>
-      {user.signature ? (
+      {signatureInfo ? (
         <ContentContainer>
           <SignatureInfoCard>
             <img src={signatureInfoImage} alt='Mulher meditando.' />
             <InfoLabel>
-              Plano: <Info>{user.signature}</Info>
+              Plano:{' '}
+              <Info>
+                {signatureInfo.signatureType === 'monthly'
+                  ? 'Mensal'
+                  : 'Semanal'}
+              </Info>
             </InfoLabel>
             <InfoLabel>
-              Data da assinatura: <Info>{}</Info>
+              Data da assinatura: <Info>{signatureInfo.startDate}</Info>
             </InfoLabel>
             <InfoLabel>
-              Proximas entregas: <Info>{}</Info>
+              Proximas entregas:
+              <DatesContainer>
+                {signatureInfo.nextDeliveries.map((delivery) => (
+                  <Info>{delivery}</Info>
+                ))}
+              </DatesContainer>
             </InfoLabel>
             <ProductsContainer>
-              <span>Chás</span>
-              <span>Produtos organicos</span>
-              <span>Incensos</span>
+              <span>{signatureInfo.tea && 'Chás'}</span>
+              <span>
+                {signatureInfo.organigProducts && 'Produtos organicos'}
+              </span>
+              <span>{signatureInfo.incense && 'Incensos'}</span>
             </ProductsContainer>
           </SignatureInfoCard>
           <SmallButton>Avaliar Entregas</SmallButton>
@@ -113,5 +124,12 @@ const InfoLabel = styled.span`
   color: ${colors.color0};
 `;
 const Info = styled.span`
-  color: ${colors.color3};
+  color: ${colors.color8};
+`;
+
+const DatesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+  padding-left: 50px;
 `;

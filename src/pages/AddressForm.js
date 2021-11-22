@@ -53,9 +53,7 @@ export default function AddressForm() {
     setSignatureInfo({ ...signatureInfo, ...formFields });
   }, [formFields]);
 
-  function handleSubmit() {
-    console.log(signatureInfo);
-  }
+  function handleSubmit() {}
   return (
     <>
       <TitleContainer>
