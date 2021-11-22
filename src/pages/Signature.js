@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../contexts/UserContext';
 import { colors } from '../globalStyles';
@@ -17,30 +17,32 @@ export default function Signature() {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const { signatureInfo } = user;
-  if (!user) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (!user.token) {
+      navigate('/');
+    }
+  });
 
   return (
     <>
       <TitleContainer>
         <h1>Bom te ver por aqui, {user.name?.split(' ')[0]}</h1>
         <h2>
-          {signatureInfo.startDate
+          {signatureInfo?.startDate
             ? '"Agradecer é a arte de atrair coisas boas"'
             : 'Você ainda não assinou nenhum plano, que tal começar agora?'}
         </h2>
       </TitleContainer>
-      {signatureInfo.startDate ? (
+      {signatureInfo?.startDate ? (
         <ContentContainer>
           <SignatureInfoCard>
             <img src={signatureInfoImage} alt='Mulher meditando.' />
             <InfoLabel>
-              Plano:{' '}
+              Plano:
               <Info>
                 {signatureInfo.signatureType === 'monthly'
-                  ? 'Mensal'
-                  : 'Semanal'}
+                  ? ' Mensal'
+                  : ' Semanal'}
               </Info>
             </InfoLabel>
             <InfoLabel>
@@ -57,7 +59,7 @@ export default function Signature() {
             <ProductsContainer>
               <span>{signatureInfo.tea && 'Chás'}</span>
               <span>
-                {signatureInfo.organigProducts && 'Produtos organicos'}
+                {signatureInfo.organicProducts && 'Produtos organicos'}
               </span>
               <span>{signatureInfo.incense && 'Incensos'}</span>
             </ProductsContainer>

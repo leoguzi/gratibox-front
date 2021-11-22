@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { colors } from '../globalStyles';
+import formImage from '../assets/image03.jpg';
+import UserContext from '../contexts/UserContext';
+import { registerSignature } from '../services/api.service';
 import {
   TitleContainer,
   SignatureInfoCard,
   SmallButton,
   ContentContainer,
 } from '../common/commonStyles';
-import formImage from '../assets/image03.jpg';
-import UserContext from '../contexts/UserContext';
 
 export default function AddressForm() {
+  const navigate = useNavigate();
   const states = [
     'AC',
     'AL',
@@ -50,10 +53,19 @@ export default function AddressForm() {
   });
 
   useEffect(() => {
+    if (!user.token) {
+      navigate('/');
+    }
+  });
+
+  useEffect(() => {
     setSignatureInfo({ ...signatureInfo, ...formFields });
   }, [formFields]);
 
-  function handleSubmit() {}
+  function handleSubmit() {
+    registerSignature(user.token, signatureInfo);
+    navigate('/signature');
+  }
   return (
     <>
       <TitleContainer>

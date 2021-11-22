@@ -21,11 +21,16 @@ export default function SignatureForm() {
     incense: false,
     organicProducts: false,
   });
-
   const { user, setSignatureInfo } = useContext(UserContext);
 
   useEffect(() => {
-    setSignatureInfo({ ...formFields, user: user.token });
+    if (!user.token) {
+      navigate('/');
+    }
+  });
+
+  useEffect(() => {
+    setSignatureInfo({ ...formFields });
   }, [formFields]);
 
   function handleSubmit() {
