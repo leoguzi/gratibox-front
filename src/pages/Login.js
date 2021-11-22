@@ -45,6 +45,7 @@ export default function Login() {
       .then((r) => login(r.data))
       .catch(handleError);
   }
+
   return (
     <>
       <TitleContainer>
@@ -59,9 +60,10 @@ export default function Login() {
           type='email'
           placeholder='E-mail'
           invalid={invalidFormFields.email}
-          onChange={(e) =>
-            setFormFields({ ...formFields, email: e.target.value })
-          }
+          onChange={(e) => {
+            setFormFields({ ...formFields, email: e.target.value });
+            setInvalidFormFields({ ...invalidFormFields, email: false });
+          }}
         />
         {invalidFormFields.email && (
           <FormErrorMessage>E-mail não cadastrado!</FormErrorMessage>
@@ -72,16 +74,17 @@ export default function Login() {
           type='password'
           placeholder='Senha'
           invalid={invalidFormFields.password}
-          onChange={(e) =>
-            setFormFields({ ...formFields, password: e.target.value })
-          }
+          onChange={(e) => {
+            setFormFields({ ...formFields, password: e.target.value });
+            setInvalidFormFields({ ...invalidFormFields, password: false });
+          }}
         />
         {invalidFormFields.password && (
           <FormErrorMessage>Senha incorreta!</FormErrorMessage>
         )}
 
         <ButtoContainer>
-          <BigButton type='submit'>
+          <BigButton disabled={disabled} type='submit'>
             <span>Login</span>
           </BigButton>
           <StyledLink to='/signup'>Ainda não sou grato(a)</StyledLink>

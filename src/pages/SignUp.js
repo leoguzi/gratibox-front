@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../services/api.service';
 
 import {
   TitleContainer,
@@ -11,24 +13,45 @@ import {
 } from '../common/commonStyles';
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  const [disabled, setDisabled] = useState(false);
   const [formFields, setFormFields] = useState({
     name: '',
     email: '',
     password: '',
-    passwordCheck: '',
+    passwordConfirm: '',
   });
   const [invalidFormFields, setInvalidFormFields] = useState({
     name: false,
     email: false,
     password: false,
-    passwordCheck: false,
+    passwordConfirm: false,
   });
-  function handleSignUp(e) {
-    e.preventDefault();
-    if (formFields.password !== formFields.passwordCheck) {
-      setInvalidFormFields({ ...invalidFormFields, passwordCheck: true });
+
+  function handleError(error) {
+    setDisabled(false);
+    const { status } = error.response;
+    if (status === 409) {
+      setInvalidFormFields({ ...invalidFormFields, email: true });
     }
   }
+
+  function handleSignUp(e) {
+    setDisabled(true);
+    e.preventDefault();
+    if (formFields.password !== formFields.passwordConfirm) {
+      setInvalidFormFields({ ...invalidFormFields, passwordConfirm: true });
+      setDisabled(false);
+    }
+    if (formFields.name.length < 2) {
+      setInvalidFormFields({ ...invalidFormFields, name: true });
+      setDisabled(false);
+    }
+    registerUser(formFields)
+      .then(() => navigate('/login'))
+      .catch(handleError);
+  }
+
   return (
     <>
       <TitleContainer>
@@ -38,6 +61,7 @@ export default function SignUp() {
       </TitleContainer>
       <StyledForm type='submit' onSubmit={(e) => handleSignUp(e)}>
         <StyledInput
+          disabled={disabled}
           required
           type='text'
           placeholder='Nome'
@@ -51,6 +75,7 @@ export default function SignUp() {
           <FormErrorMessage>Digite seu nome!</FormErrorMessage>
         )}
         <StyledInput
+          disabled={disabled}
           required
           type='email'
           placeholder='E-mail'
@@ -64,6 +89,7 @@ export default function SignUp() {
           <FormErrorMessage>E-mail já cadastrado!</FormErrorMessage>
         )}
         <StyledInput
+          disabled={disabled}
           required
           type='password'
           placeholder='Senha'
@@ -77,23 +103,24 @@ export default function SignUp() {
           <FormErrorMessage>Informe uma senha!</FormErrorMessage>
         )}
         <StyledInput
+          disabled={disabled}
           required
           type='password'
           placeholder='Confirmar senha'
-          invalid={invalidFormFields.passwordCheck}
+          invalid={invalidFormFields.passwordConfirm}
           onChange={(e) => {
-            setFormFields({ ...formFields, passwordCheck: e.target.value });
+            setFormFields({ ...formFields, passwordConfirm: e.target.value });
             setInvalidFormFields({
               ...invalidFormFields,
-              passwordCheck: false,
+              passwordConfirm: false,
             });
           }}
         />
-        {invalidFormFields.passwordCheck && (
+        {invalidFormFields.passwordConfirm && (
           <FormErrorMessage>Senha não confere!</FormErrorMessage>
         )}
         <ButtoContainer>
-          <BigButton type='submit'>
+          <BigButton disabled={disabled} type='submit'>
             <span>Cadastrar</span>
           </BigButton>
           <StyledLink to='/login'>Já sou grato(a)</StyledLink>

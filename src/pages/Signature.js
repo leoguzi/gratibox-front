@@ -14,21 +14,24 @@ import monthlyImage from '../assets/image02.jpg';
 import signatureInfoImage from '../assets/image03.jpg';
 
 export default function Signature() {
-  const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const { signatureInfo } = user;
+  if (!user) {
+    navigate('/');
+  }
 
   return (
     <>
       <TitleContainer>
-        <h1>Bom te ver por aqui, {user.name.split(' ')[0]}</h1>
+        <h1>Bom te ver por aqui, {user.name?.split(' ')[0]}</h1>
         <h2>
-          {signatureInfo
+          {signatureInfo.startDate
             ? '"Agradecer é a arte de atrair coisas boas"'
             : 'Você ainda não assinou nenhum plano, que tal começar agora?'}
         </h2>
       </TitleContainer>
-      {signatureInfo ? (
+      {signatureInfo.startDate ? (
         <ContentContainer>
           <SignatureInfoCard>
             <img src={signatureInfoImage} alt='Mulher meditando.' />
@@ -46,7 +49,7 @@ export default function Signature() {
             <InfoLabel>
               Proximas entregas:
               <DatesContainer>
-                {signatureInfo.nextDeliveries.map((delivery) => (
+                {signatureInfo.nextDeliveries?.map((delivery) => (
                   <Info>{delivery}</Info>
                 ))}
               </DatesContainer>
