@@ -1,18 +1,18 @@
 # GratiBox
 
-An easy way of signig up to a life of everyday gratefulness.
+An easy way of engaging into a life of everyday gratefulness.
 </br>
 
 <p  align='center'>
 </br>
-<img src="./assets/gratibox_front_page.png"/>
+<img src="./src/assets/gratibox_front_page.png"/>
 </p>
 </br>
 Try it out now at https://gratibox-front-eight.vercel.app/
 
 ## About
 
-This is an web application on which people can sign up to a delivery service that provides them with products such as incence, organic products and tea. A few of the implemented features:
+This is the front-end of an web application on which people can sign up to a delivery service that provides them with products such as incence, organic products and tea. A few of the implemented features:
 
 - Sign Up;
 - Login;
@@ -24,10 +24,10 @@ This is an web application on which people can sign up to a delivery service tha
 The following tools and frameworks were used in the construction of the project:<br>
 
 <p>
-  <img style='margin: 5px;' src='https://img.shields.io/badge/styled-components%20-%2320232a.svg?&style=for-the-badge&color=b8679e&logo=styled-components&logoColor=%3a3a3a'>
-  <img style='margin: 5px;' src='https://img.shields.io/badge/axios%20-%2320232a.svg?&style=for-the-badge&color=informational'>
-  <img style='margin: 5px;' src="https://img.shields.io/badge/react-app%20-%2320232a.svg?&style=for-the-badge&color=60ddf9&logo=react&logoColor=%2361DAFB"/>
-  <img style='margin: 5px;' src="https://img.shields.io/badge/react_route%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
+<img style='margin: 5px;' src="https://img.shields.io/badge/react-app%20-%2320232a.svg?&style=for-the-badge&color=60ddf9&logo=react&logoColor=%2361DAFB"/>
+<img style='margin: 5px;' src='https://img.shields.io/badge/styled-components%20-%2320232a.svg?&style=for-the-badge&color=b8679e&logo=styled-components&logoColor=%3a3a3a'>
+<img style='margin: 5px;' src='https://img.shields.io/badge/axios%20-%2320232a.svg?&style=for-the-badge&color=informational'> 
+<img style='margin: 5px;' src="https://img.shields.io/badge/react_route%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
 </p>
 
 ## How to run
